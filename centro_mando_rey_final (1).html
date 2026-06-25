@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centro de Mando — Rey Rupay</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:100vh;-webkit-font-smoothing:antialiased;}
+.page{max-width:960px;margin:0 auto;padding:20px;}
+
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:16px;border-bottom:0.5px solid #E8EAED;}
+.top-name{font-size:16px;font-weight:600;color:#1A1D23;}
+.top-sub{font-size:10px;color:#9BA3AF;margin-top:2px;letter-spacing:0.06em;text-transform:uppercase;}
+.top-date{font-size:13px;font-weight:500;color:#1A1D23;text-align:right;}
+.top-time{font-size:10px;color:#9BA3AF;margin-top:2px;}
+
+.hero{background:#0C447C;border-radius:16px;padding:18px 22px;margin-bottom:10px;display:block;text-decoration:none;border:none;}
+.hero:hover{opacity:0.95;}
+.hero-tag{font-size:10px;color:#85B7EB;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:4px;}
+.hero-title{font-size:20px;font-weight:600;color:#EEF4FF;margin-bottom:14px;}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.stat{background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center;}
+.stat-n{font-size:26px;font-weight:600;color:#EEF4FF;line-height:1;}
+.stat-l{font-size:10px;color:#85B7EB;margin-top:3px;}
+
+.alert{background:#FCEBEB;border:0.5px solid #F09595;border-radius:10px;padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.alert i{font-size:14px;color:#A32D2D;flex-shrink:0;}
+.alert-text{font-size:12px;color:#A32D2D;font-weight:500;}
+
+.sec{display:flex;align-items:center;gap:10px;margin:18px 0 10px;}
+.sec-line{flex:1;height:0.5px;background:#E8EAED;}
+.sec-label{font-size:10px;font-weight:600;color:#9BA3AF;letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:8px;}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px;}
+
+.card{background:#FFFFFF;border:0.5px solid #E8EAED;border-radius:12px;padding:14px;display:block;text-decoration:none;transition:border-color 0.15s,box-shadow 0.15s;}
+.card:hover{border-color:#BCC2CC;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+.card-icon{font-size:20px;margin-bottom:8px;display:block;}
+.card-label{font-size:13px;font-weight:600;color:#1A1D23;}
+.card-sub{font-size:11px;color:#9BA3AF;margin-top:2px;}
+.badge{display:inline-block;font-size:9px;border-radius:4px;padding:2px 7px;margin-top:6px;font-weight:600;letter-spacing:0.03em;}
+.badge-ok{background:#EAF3DE;color:#3B6D11;border:0.5px solid #C0DD97;}
+.badge-soon{background:#F1EFE8;color:#7A7467;border:0.5px solid #D3D1C7;}
+
+.logist{background:#F8F7FF;border:0.5px solid #7F77DD;border-radius:12px;padding:13px 16px;display:flex;align-items:center;gap:12px;text-decoration:none;margin-bottom:8px;transition:border-color 0.15s,background 0.15s;}
+.logist:hover{border-color:#534AB7;background:#F0EEFF;}
+.logist i.lead{font-size:22px;color:#7F77DD;flex-shrink:0;}
+.logist-label{font-size:13px;font-weight:600;color:#3C3489;}
+.logist-sub{font-size:11px;color:#7F77DD;margin-top:2px;}
+.logist i.arr{font-size:14px;color:#AFA9EC;}
+
+.cowork{background:#EAF3DE;border:0.5px solid #97C459;border-radius:12px;padding:13px 16px;margin-bottom:8px;}
+.cowork-title{font-size:10px;font-weight:600;color:#3B6D11;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:9px;}
+.cowork-items{display:flex;flex-direction:column;gap:6px;}
+.cowork-item{display:flex;align-items:center;gap:9px;padding:7px 10px;background:rgba(255,255,255,0.65);border-radius:7px;text-decoration:none;}
+.cowork-item:hover{background:rgba(255,255,255,0.9);}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.dot-g{background:#3B6D11;}
+.dot-y{background:#BA7517;}
+.dot-gr{background:#888780;}
+.cowork-text{font-size:11px;color:#27500A;font-weight:500;}
+
+.qgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;}
+.qbtn{background:#FFFFFF;border:0.5px solid #E8EAED;border-radius:10px;padding:11px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;transition:border-color 0.15s,box-shadow 0.15s;}
+.qbtn:hover{border-color:#BCC2CC;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.qbtn i{font-size:19px;color:#5A6470;}
+.qbtn-label{font-size:10px;font-weight:500;color:#5A6470;text-align:center;line-height:1.2;}
+
+@media(max-width:600px){
+  .grid2,.grid3{grid-template-columns:repeat(2,1fr);}
+  .qgrid{grid-template-columns:repeat(4,1fr);}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top">
+    <div>
+      <div class="top-name">Rey Rupay Peña</div>
+      <div class="top-sub">Supply Chain · Operaciones · IA · Lima</div>
+    </div>
+    <div class="top-right">
+      <div class="top-date" id="fecha"></div>
+      <div class="top-time" id="hora"></div>
+    </div>
+  </div>
+
+  <a class="hero" href="https://app.notion.com/p/3841d3405b388015a860d57b858b1a07?v=3841d3405b388085b217000c19f41490" target="_blank">
+    <div class="hero-tag">⚡ Prioridad #1 — Recolocacion Laboral</div>
+    <div class="hero-title">Reinsercion Laboral</div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">8</div><div class="stat-l">Activos</div></div>
+      <div class="stat"><div class="stat-n" style="color:#F5C842;">13</div><div class="stat-l">Sin respuesta</div></div>
+      <div class="stat"><div class="stat-n" style="color:#F08080;">1</div><div class="stat-l">Entrevista final</div></div>
+    </div>
+  </a>
+
+  <div class="alert">
+    <i class="ti ti-bell"></i>
+    <span class="alert-text">Pharex — 16 dias sin contacto · reactivar hoy</span>
+  </div>
+
+  <div class="sec"><div class="sec-line"></div><div class="sec-label">Espacio de Trabajo</div><div class="sec-line"></div></div>
+  <div class="grid2">
+    <a class="card" href="https://app.powerbi.com/links/r-OMattl-0?ctid=8469ca6e-1e31-4bce-b64d-e2e907c76983&pbi_source=linkShare" target="_blank">
+      <span class="card-icon">📊</span><div class="card-label">Dashboard Power BI</div><div class="card-sub">Indicadores live</div><span class="badge badge-ok">activo</span>
+    </a>
+    <a class="card" href="https://docs.google.com/spreadsheets/d/1Mtb5Z-rDQdr6ufPP0I-Qx_ajwlnp-oNRU-almFAm4-Q/edit" target="_blank">
+      <span class="card-icon">🔄</span><div class="card-label">Coefficient</div><div class="card-sub">Sincronizar datos</div><span class="badge badge-ok">sincronizar</span>
+    </a>
+    <a class="card" href="https://docs.google.com/spreadsheets/d/1q9OjPJuN-6ojv2WrHkZBAt_wrE3-QQs0/edit" target="_blank">
+      <span class="card-icon">🎯</span><div class="card-label">Objetivos 2026</div><div class="card-sub">OKRs · avance</div><span class="badge badge-ok">activo</span>
+    </a>
+    <a class="card" href="https://drive.google.com/file/d/1v6vOJntafgrLbxyXFtfFogkOtdv46vI5/view" target="_blank">
+      <span class="card-icon">⭐</span><div class="card-label">North Star 2026</div><div class="card-sub">Mis prioridades</div><span class="badge badge-ok">activo</span>
+    </a>
+  </div>
+
+  <a class="logist" href="#" target="_blank">
+    <i class="ti ti-robot lead"></i>
+    <div style="flex:1;"><div class="logist-label">Logist IA</div><div class="logist-sub">Soluciones de IA para empresas · en construccion</div></div>
+    <i class="ti ti-arrow-right arr"></i>
+  </a>
+
+  <div class="sec"><div class="sec-line"></div><div class="sec-label">CoWork IA — Trabaja para Ti</div><div class="sec-line"></div></div>
+  <div class="cowork">
+    <div class="cowork-title">automatizaciones</div>
+    <div class="cowork-items">
+      <div class="cowork-item"><div class="dot dot-g"></div><span class="cowork-text">📰 Noticias de IA en Supply Chain — 8:00am diario</span></div>
+      <div class="cowork-item"><div class="dot dot-g"></div><span class="cowork-text">💼 Nuevos puestos en LinkedIn — busqueda diaria</span></div>
+      <div class="cowork-item"><div class="dot dot-y"></div><span class="cowork-text">🔔 Seguimientos pendientes del dia</span></div>
+      <a class="cowork-item" href="https://n8n.io" target="_blank"><div class="dot dot-gr"></div><span class="cowork-text">⚙️ n8n — Flujos automaticos · proximamente</span></a>
+      <a class="cowork-item" href="https://make.com" target="_blank"><div class="dot dot-gr"></div><span class="cowork-text">🔗 Make — Integraciones · proximamente</span></a>
+    </div>
+  </div>
+
+  <div class="sec"><div class="sec-line"></div><div class="sec-label">Ingles · Speaking · Formacion</div><div class="sec-line"></div></div>
+  <div class="grid3">
+    <a class="card" href="https://chat.openai.com" target="_blank">
+      <span class="card-icon">🎙️</span><div class="card-label">GPT Speaking</div><div class="card-sub">Tu coach de ingles</div><span class="badge badge-ok">diario</span>
+    </a>
+    <a class="card" href="https://open.spotify.com" target="_blank">
+      <span class="card-icon">🎧</span><div class="card-label">Podcasts SC</div><div class="card-sub">Supply Chain · Liderazgo</div><span class="badge badge-ok">activo</span>
+    </a>
+    <a class="card" href="https://notebooklm.google.com" target="_blank">
+      <span class="card-icon">📖</span><div class="card-label">NotebookLM</div><div class="card-sub">Estudio con IA</div><span class="badge badge-ok">activo</span>
+    </a>
+  </div>
+
+  <div class="sec"><div class="sec-line"></div><div class="sec-label">Dev & Data · Tecnologia</div><div class="sec-line"></div></div>
+  <div class="grid3">
+    <a class="card" href="https://n8n.io" target="_blank">
+      <span class="card-icon">⚙️</span><div class="card-label">n8n</div><div class="card-sub">Automatizaciones</div><span class="badge badge-soon">proximamente</span>
+    </a>
+    <a class="card" href="https://make.com" target="_blank">
+      <span class="card-icon">🔗</span><div class="card-label">Make</div><div class="card-sub">Flujos de trabajo</div><span class="badge badge-soon">proximamente</span>
+    </a>
+    <a class="card" href="https://colab.research.google.com" target="_blank">
+      <span class="card-icon">🐍</span><div class="card-label">Python</div><div class="card-sub">Google Colab</div><span class="badge badge-soon">proximamente</span>
+    </a>
+    <a class="card" href="https://colab.research.google.com" target="_blank">
+      <span class="card-icon">🗄️</span><div class="card-label">SQL</div><div class="card-sub">Consultas y datos</div><span class="badge badge-soon">proximamente</span>
+    </a>
+    <a class="card" href="https://app.powerbi.com" target="_blank">
+      <span class="card-icon">📈</span><div class="card-label">Power BI</div><div class="card-sub">Visualizacion</div><span class="badge badge-ok">activo</span>
+    </a>
+    <a class="card" href="https://claude.ai" target="_blank">
+      <span class="card-icon">🧠</span><div class="card-label">Claude</div><div class="card-sub">IA avanzada</div><span class="badge badge-ok">activo</span>
+    </a>
+  </div>
+
+  <div class="sec"><div class="sec-line"></div><div class="sec-label">Herramientas · Contacto</div><div class="sec-line"></div></div>
+  <div class="qgrid">
+    <a class="qbtn" href="https://reyrupay.com" target="_blank"><i class="ti ti-world"></i><span class="qbtn-label">Mi web</span></a>
+    <a class="qbtn" href="https://linkedin.com/in/rey-rupay-scm" target="_blank"><i class="ti ti-brand-linkedin"></i><span class="qbtn-label">LinkedIn</span></a>
+    <a class="qbtn" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><i class="ti ti-mail"></i><span class="qbtn-label">Correo</span></a>
+    <a class="qbtn" href="https://outlook.live.com/mail/0/inbox" target="_blank"><i class="ti ti-mail"></i><span class="qbtn-label">Hotmail</span></a>
+    <a class="qbtn" href="https://wa.me/51933569556" target="_blank"><i class="ti ti-brand-whatsapp"></i><span class="qbtn-label">WhatsApp</span></a>
+    <a class="qbtn" href="https://calendar.google.com" target="_blank"><i class="ti ti-calendar-event"></i><span class="qbtn-label">Calendar</span></a>
+    <a class="qbtn" href="https://calendly.com/kenny18701/30min" target="_blank"><i class="ti ti-calendar"></i><span class="qbtn-label">Calendly</span></a>
+    <a class="qbtn" href="https://excalidraw.com" target="_blank"><i class="ti ti-pencil"></i><span class="qbtn-label">Excalidraw</span></a>
+    <a class="qbtn" href="https://gamma.app" target="_blank"><i class="ti ti-presentation"></i><span class="qbtn-label">Gamma</span></a>
+    <a class="qbtn" href="https://web.telegram.org" target="_blank"><i class="ti ti-brand-telegram"></i><span class="qbtn-label">Telegram</span></a>
+  </div>
+
+</div>
+<script>
+function tick(){
+  const d=new Date();
+  const dias=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  document.getElementById('fecha').textContent=dias[d.getDay()]+' '+d.getDate()+' '+meses[d.getMonth()];
+  const h=d.getHours().toString().padStart(2,'0');
+  const m=d.getMinutes().toString().padStart(2,'0');
+  document.getElementById('hora').textContent=h+':'+m+' hrs';
+}
+tick();setInterval(tick,30000);
+</script>
+</body>
+</html>
