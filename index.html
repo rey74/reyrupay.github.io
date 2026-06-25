@@ -17,7 +17,7 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 .top-date{font-size:13px;font-weight:500;color:#1A1D23;text-align:right;}
 .top-time{font-size:10px;color:#9BA3AF;margin-top:2px;}
 
-.hero{background:#0C447C;border-radius:16px;padding:18px 22px;margin-bottom:10px;display:block;text-decoration:none;border:none;}
+.hero{background:#0C447C;border-radius:16px;padding:18px 22px;margin-bottom:10px;display:block;text-decoration:none;}
 .hero:hover{opacity:0.95;}
 .hero-tag{font-size:10px;color:#85B7EB;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;margin-bottom:4px;}
 .hero-title{font-size:20px;font-weight:600;color:#EEF4FF;margin-bottom:14px;}
@@ -25,10 +25,13 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 .stat{background:rgba(0,0,0,0.2);border-radius:10px;padding:10px;text-align:center;}
 .stat-n{font-size:26px;font-weight:600;color:#EEF4FF;line-height:1;}
 .stat-l{font-size:10px;color:#85B7EB;margin-top:3px;}
+.loading{font-size:18px;color:#85B7EB;line-height:1;}
 
 .alert{background:#FCEBEB;border:0.5px solid #F09595;border-radius:10px;padding:10px 14px;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
 .alert i{font-size:14px;color:#A32D2D;flex-shrink:0;}
 .alert-text{font-size:12px;color:#A32D2D;font-weight:500;}
+
+.sync-info{font-size:10px;color:#9BA3AF;text-align:right;margin-top:6px;margin-bottom:2px;}
 
 .sec{display:flex;align-items:center;gap:10px;margin:18px 0 10px;}
 .sec-line{flex:1;height:0.5px;background:#E8EAED;}
@@ -42,12 +45,12 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 .card-icon{font-size:20px;margin-bottom:8px;display:block;}
 .card-label{font-size:13px;font-weight:600;color:#1A1D23;}
 .card-sub{font-size:11px;color:#9BA3AF;margin-top:2px;}
-.badge{display:inline-block;font-size:9px;border-radius:4px;padding:2px 7px;margin-top:6px;font-weight:600;letter-spacing:0.03em;}
+.badge{display:inline-block;font-size:9px;border-radius:4px;padding:2px 7px;margin-top:6px;font-weight:600;}
 .badge-ok{background:#EAF3DE;color:#3B6D11;border:0.5px solid #C0DD97;}
 .badge-soon{background:#F1EFE8;color:#7A7467;border:0.5px solid #D3D1C7;}
 
-.logist{background:#F8F7FF;border:0.5px solid #7F77DD;border-radius:12px;padding:13px 16px;display:flex;align-items:center;gap:12px;text-decoration:none;margin-bottom:8px;transition:border-color 0.15s,background 0.15s;}
-.logist:hover{border-color:#534AB7;background:#F0EEFF;}
+.logist{background:#F8F7FF;border:0.5px solid #7F77DD;border-radius:12px;padding:13px 16px;display:flex;align-items:center;gap:12px;text-decoration:none;margin-bottom:8px;transition:border-color 0.15s;}
+.logist:hover{border-color:#534AB7;}
 .logist i.lead{font-size:22px;color:#7F77DD;flex-shrink:0;}
 .logist-label{font-size:13px;font-weight:600;color:#3C3489;}
 .logist-sub{font-size:11px;color:#7F77DD;margin-top:2px;}
@@ -65,8 +68,8 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 .cowork-text{font-size:11px;color:#27500A;font-weight:500;}
 
 .qgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;}
-.qbtn{background:#FFFFFF;border:0.5px solid #E8EAED;border-radius:10px;padding:11px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;transition:border-color 0.15s,box-shadow 0.15s;}
-.qbtn:hover{border-color:#BCC2CC;box-shadow:0 2px 6px rgba(0,0,0,0.05);}
+.qbtn{background:#FFFFFF;border:0.5px solid #E8EAED;border-radius:10px;padding:11px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;transition:border-color 0.15s;}
+.qbtn:hover{border-color:#BCC2CC;}
 .qbtn i{font-size:19px;color:#5A6470;}
 .qbtn-label{font-size:10px;font-weight:500;color:#5A6470;text-align:center;line-height:1.2;}
 
@@ -94,16 +97,17 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
     <div class="hero-tag">⚡ Prioridad #1 — Recolocacion Laboral</div>
     <div class="hero-title">Reinsercion Laboral</div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-n">8</div><div class="stat-l">Activos</div></div>
-      <div class="stat"><div class="stat-n" style="color:#F5C842;">13</div><div class="stat-l">Sin respuesta</div></div>
-      <div class="stat"><div class="stat-n" style="color:#F08080;">1</div><div class="stat-l">Entrevista final</div></div>
+      <div class="stat"><div class="stat-n loading" id="stat-activos">...</div><div class="stat-l">Activos</div></div>
+      <div class="stat"><div class="stat-n loading" id="stat-sinresp" style="color:#F5C842;">...</div><div class="stat-l">Sin respuesta</div></div>
+      <div class="stat"><div class="stat-n loading" id="stat-entrevista" style="color:#F08080;">...</div><div class="stat-l">Entrevista final</div></div>
     </div>
   </a>
 
   <div class="alert">
     <i class="ti ti-bell"></i>
-    <span class="alert-text">Pharex — 16 dias sin contacto · reactivar hoy</span>
+    <span class="alert-text" id="alert-urgente">Cargando datos...</span>
   </div>
+  <div class="sync-info" id="sync-time"></div>
 
   <div class="sec"><div class="sec-line"></div><div class="sec-label">Espacio de Trabajo</div><div class="sec-line"></div></div>
   <div class="grid2">
@@ -190,16 +194,81 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 
 </div>
 <script>
-function tick(){
-  const d=new Date();
-  const dias=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const meses=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  document.getElementById('fecha').textContent=dias[d.getDay()]+' '+d.getDate()+' '+meses[d.getMonth()];
-  const h=d.getHours().toString().padStart(2,'0');
-  const m=d.getMinutes().toString().padStart(2,'0');
-  document.getElementById('hora').textContent=h+':'+m+' hrs';
+const CSV_URL = 'https://corsproxy.io/?https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1262920453&single=true&output=csv';
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  // Fila 0 es el banner de Coefficient, fila 1 son los encabezados reales
+  const headers = lines[1].split(',').map(h => h.trim().replace(/"/g, ''));
+  return lines.slice(2).map(line => {
+    const vals = line.split(',').map(v => v.trim().replace(/"/g, ''));
+    const obj = {};
+    headers.forEach((h, i) => obj[h] = vals[i] || '');
+    return obj;
+  });
 }
-tick();setInterval(tick,30000);
+
+async function loadData() {
+  try {
+    const res = await fetch(CSV_URL);
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    const reinsercion = rows.filter(r => 
+      r['Objetivo'] && r['Objetivo'].trim() === 'Reinserción Laboral'
+    );
+
+    const activos = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'Activo').length;
+    const sinResp = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'sin comunicación').length;
+    const entrevista = reinsercion.filter(r => r['Etapa del proceso'] && r['Etapa del proceso'].toLowerCase().includes('entrevista final')).length;
+
+    // El más urgente — mayor días sin contacto entre activos
+    const activosRows = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'Activo');
+    let maxDias = 0;
+    let maxEmpresa = '';
+    activosRows.forEach(r => {
+      const dias = parseInt(r['Días sin contacto'] || r['Dias sin contacto'] || 0);
+      if (dias > maxDias) { maxDias = dias; maxEmpresa = r['Empresa'] || ''; }
+    });
+
+    document.getElementById('stat-activos').textContent = activos;
+    document.getElementById('stat-activos').style.fontSize = '26px';
+    document.getElementById('stat-sinresp').textContent = sinResp;
+    document.getElementById('stat-sinresp').style.fontSize = '26px';
+    document.getElementById('stat-entrevista').textContent = entrevista;
+    document.getElementById('stat-entrevista').style.fontSize = '26px';
+
+    if (maxEmpresa) {
+      document.getElementById('alert-urgente').textContent = maxEmpresa + ' — ' + maxDias + ' dias sin contacto · reactivar hoy';
+    } else {
+      document.getElementById('alert-urgente').textContent = 'Sin alertas urgentes hoy';
+    }
+
+    const now = new Date();
+    document.getElementById('sync-time').textContent = 'Datos actualizados: ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ' hrs';
+
+  } catch(e) {
+    document.getElementById('stat-activos').textContent = '—';
+    document.getElementById('stat-sinresp').textContent = '—';
+    document.getElementById('stat-entrevista').textContent = '—';
+    document.getElementById('alert-urgente').textContent = 'No se pudo cargar los datos';
+  }
+}
+
+function tick() {
+  const d = new Date();
+  const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  document.getElementById('fecha').textContent = dias[d.getDay()] + ' ' + d.getDate() + ' ' + meses[d.getMonth()];
+  const h = d.getHours().toString().padStart(2,'0');
+  const m = d.getMinutes().toString().padStart(2,'0');
+  document.getElementById('hora').textContent = h + ':' + m + ' hrs';
+}
+
+tick();
+setInterval(tick, 30000);
+loadData();
+setInterval(loadData, 3600000);
 </script>
 </body>
 </html>
