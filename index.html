@@ -194,47 +194,25 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 
 </div>
 <script>
-const CSV_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1315052656&single=true&output=csv';
-const CSV_URL = CSV_BASE;
-
-function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  // Fila 0 es el banner de Coefficient, fila 1 son los encabezados reales
-  const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-  return lines.slice(1).map(line => {
-    const vals = line.split(',').map(v => v.trim().replace(/"/g, ''));
-    const obj = {};
-    headers.forEach((h, i) => obj[h] = vals[i] || '');
-    return obj;
-  });
-}
+const CSV_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1315052656&single=true&output=csv');
 
 async function loadData() {
   try {
     const res = await fetch(CSV_URL);
     const text = await res.text();
-    const rows = parseCSV(text);
-
-const activos = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Activo')?.[Object.keys(rows[0])[1]] || 0);
-const sinResp = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Sin Comunicación')?.[Object.keys(rows[0])[1]] || 0);
-const descartado = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Descartado')?.[Object.keys(rows[0])[1]] || 0);
-    // El más urgente — mayor días sin contacto entre activos
-document.getElementById('stat-activos').textContent = activos;
-document.getElementById('stat-activos').style.fontSize = '26px';
-
-document.getElementById('stat-sinresp').textContent = sinResp;
-document.getElementById('stat-entrevista').textContent = descartado;
-
-document.getElementById('stat-entrevista').textContent = descartado;
-document.getElementById('stat-entrevista').style.fontSize = '26px';
-
-    document.getElementById('alert-urgente').textContent = 'Datos cargados correctamente';
-      document.getElementById('alert-urgente').textContent = 'Sin alertas urgentes hoy';
-    }
-
+    const lines = text.trim().split('\n');
+    const activos    = parseInt(lines[1].split(',')[1]) || 0;
+    const sinResp    = parseInt(lines[2].split(',')[1]) || 0;
+    const descartado = parseInt(lines[3].split(',')[1]) || 0;
+    document.getElementById('stat-activos').textContent = activos;
+    document.getElementById('stat-activos').style.fontSize = '26px';
+    document.getElementById('stat-sinresp').textContent = sinResp;
+    document.getElementById('stat-sinresp').style.fontSize = '26px';
+    document.getElementById('stat-entrevista').textContent = descartado;
+    document.getElementById('stat-entrevista').style.fontSize = '26px';
+    document.getElementById('alert-urgente').textContent = 'Sin alertas urgentes hoy';
     const now = new Date();
     document.getElementById('sync-time').textContent = 'Datos actualizados: ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ' hrs';
-
   } catch(e) {
     document.getElementById('stat-activos').textContent = '—';
     document.getElementById('stat-sinresp').textContent = '—';
