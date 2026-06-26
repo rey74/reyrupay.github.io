@@ -234,6 +234,15 @@ async function loadAlertas() {
   }
 }
 
+function tick() {
+  const d = new Date();
+  const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  document.getElementById('fecha').textContent = dias[d.getDay()] + ' ' + d.getDate() + ' ' + meses[d.getMonth()];
+  const h = d.getHours().toString().padStart(2,'0');
+  const m = d.getMinutes().toString().padStart(2,'0');
+  document.getElementById('hora').textContent = h + ':' + m + ' hrs';
+}
 tick();
 setInterval(tick, 30000);
 loadData();
