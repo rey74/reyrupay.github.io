@@ -195,7 +195,7 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 </div>
 <script>
 const CSV_BASE = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1315052656&single=true&output=csv';
-const CSV_URL = 'https://corsproxy.io/?' + encodeURIComponent(CSV_BASE);
+const CSV_URL = CSV_BASE;
 
 function parseCSV(text) {
   const lines = text.trim().split('\n');
@@ -217,26 +217,18 @@ async function loadData() {
 
 const activos = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Activo')?.[Object.keys(rows[0])[1]] || 0);
 const sinResp = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Sin Comunicación')?.[Object.keys(rows[0])[1]] || 0);
-const entrevista = 0;
+const descartado = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Descartado')?.[Object.keys(rows[0])[1]] || 0);
     // El más urgente — mayor días sin contacto entre activos
-    const activosRows = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'Activo');
-    let maxDias = 0;
-    let maxEmpresa = '';
-    activosRows.forEach(r => {
-      const dias = parseInt(r['Días sin contacto'] || r['Dias sin contacto'] || 0);
-      if (dias > maxDias) { maxDias = dias; maxEmpresa = r['Empresa'] || ''; }
-    });
+document.getElementById('stat-activos').textContent = activos;
+document.getElementById('stat-activos').style.fontSize = '26px';
 
-    document.getElementById('stat-activos').textContent = activos;
-    document.getElementById('stat-activos').style.fontSize = '26px';
-    document.getElementById('stat-sinresp').textContent = sinResp;
-    document.getElementById('stat-sinresp').style.fontSize = '26px';
-    document.getElementById('stat-entrevista').textContent = entrevista;
-    document.getElementById('stat-entrevista').style.fontSize = '26px';
+document.getElementById('stat-sinresp').textContent = sinResp;
+document.getElementById('stat-entrevista').textContent = descartado;
 
-    if (maxEmpresa) {
-      document.getElementById('alert-urgente').textContent = maxEmpresa + ' — ' + maxDias + ' dias sin contacto · reactivar hoy';
-    } else {
+document.getElementById('stat-entrevista').textContent = descartado;
+document.getElementById('stat-entrevista').style.fontSize = '26px';
+
+    document.getElementById('alert-urgente').textContent = 'Datos cargados correctamente';
       document.getElementById('alert-urgente').textContent = 'Sin alertas urgentes hoy';
     }
 
