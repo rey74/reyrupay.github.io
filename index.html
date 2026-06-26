@@ -215,8 +215,8 @@ async function loadData() {
     const text = await res.text();
     const rows = parseCSV(text);
 
-const activos = parseInt(rows.find(r => r['Estado']?.trim() === 'Activo')?.['Total'] || 0);
-const sinResp = parseInt(rows.find(r => r['Estado']?.trim() === 'Sin Comunicación')?.['Total'] || 0);
+const activos = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Activo')?.[Object.keys(rows[0])[1]] || 0);
+const sinResp = parseInt(rows.find(r => Object.values(r)[0]?.trim() === 'Sin Comunicación')?.[Object.keys(rows[0])[1]] || 0);
 const entrevista = 0;
     // El más urgente — mayor días sin contacto entre activos
     const activosRows = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'Activo');
