@@ -198,7 +198,7 @@ const CSV_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://docs.goog
 
 async function loadData() {
   try {
-    const res = await fetch(CSV_URL);
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1315052656&single=true&output=csv'));
     const text = await res.text();
     const lines = text.trim().split('\n');
     const activos    = parseInt(lines[1].split(',')[1]) || 0;
@@ -210,39 +210,37 @@ async function loadData() {
     document.getElementById('stat-sinresp').style.fontSize = '26px';
     document.getElementById('stat-entrevista').textContent = descartado;
     document.getElementById('stat-entrevista').style.fontSize = '26px';
-    try { const alertaRes = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=917917767&single=true&output=csv'));
-    const alertaText = await alertaRes.text();
-    const alertaLines = alertaText.trim().split('\n').filter(l => l.trim());
-    if (alertaLines.length > 0) {
-      const alertas = alertaLines.map(l => { const p = l.split(','); return 'Contactar a ' + p[0].replace(/"/g,'').trim() + ' — ' + (p[1]||'').replace(/"/g,'').trim(); });
-      document.getElementById('alert-urgente').textContent = alertas.join(' | ');
-    } else {
-      document.getElementById('alert-urgente').textContent = 'Sin seguimientos para hoy';
-    } catch(alertErr) { document.getElementById('alert-urgente').textContent = 'Sin seguimientos para hoy'; }
     const now = new Date();
     document.getElementById('sync-time').textContent = 'Datos actualizados: ' + now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0') + ' hrs';
   } catch(e) {
     document.getElementById('stat-activos').textContent = '—';
     document.getElementById('stat-sinresp').textContent = '—';
     document.getElementById('stat-entrevista').textContent = '—';
-    document.getElementById('alert-urgente').textContent = 'No se pudo cargar los datos';
   }
 }
 
-function tick() {
-  const d = new Date();
-  const dias = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-  const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  document.getElementById('fecha').textContent = dias[d.getDay()] + ' ' + d.getDate() + ' ' + meses[d.getMonth()];
-  const h = d.getHours().toString().padStart(2,'0');
-  const m = d.getMinutes().toString().padStart(2,'0');
-  document.getElementById('hora').textContent = h + ':' + m + ' hrs';
+async function loadAlertas() {
+  try {
+    const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=917917767&single=true&output=csv'));
+    const text = await res.text();
+    const lines = text.trim().split('\n').filter(l => l.trim());
+    if (lines.length > 0) {
+      const alertas = lines.map(l => { const p = l.split(','); return 'Contactar a ' + p[0].replace(/"/g,'').trim() + ' — ' + (p[1]||'').replace(/"/g,'').trim(); });
+      document.getElementById('alert-urgente').textContent = alertas.join(' | ');
+    } else {
+      document.getElementById('alert-urgente').textContent = 'Sin seguimientos para hoy';
+    }
+  } catch(e) {
+    document.getElementById('alert-urgente').textContent = 'Sin seguimientos para hoy';
+  }
 }
 
 tick();
 setInterval(tick, 30000);
 loadData();
+loadAlertas();
 setInterval(loadData, 3600000);
+setInterval(loadAlertas, 3600000);
 </script>
 </body>
 </html>
