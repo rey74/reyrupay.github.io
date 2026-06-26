@@ -194,8 +194,6 @@ body{font-family:'Inter',sans-serif;background:#F7F8FA;color:#1A1D23;min-height:
 
 </div>
 <script>
-const CSV_URL = 'https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1315052656&single=true&output=csv');
-
 async function loadData() {
   try {
     const res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=1315052656&single=true&output=csv'));
@@ -217,6 +215,7 @@ async function loadData() {
     document.getElementById('stat-sinresp').textContent = '—';
     document.getElementById('stat-entrevista').textContent = '—';
   }
+}
 
 async function loadAlertas() {
   try {
@@ -243,6 +242,7 @@ function tick() {
   const m = d.getMinutes().toString().padStart(2,'0');
   document.getElementById('hora').textContent = h + ':' + m + ' hrs';
 }
+
 tick();
 setInterval(tick, 30000);
 loadData();
