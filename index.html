@@ -215,14 +215,9 @@ async function loadData() {
     const text = await res.text();
     const rows = parseCSV(text);
 
-    const reinsercion = rows.filter(r => 
-      r['Objetivo'] && r['Objetivo'].trim() === 'Reinserción Laboral'
-    );
-
-    const activos = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'Activo').length;
-    const sinResp = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'sin comunicación').length;
-    const entrevista = reinsercion.filter(r => r['Etapa del proceso'] && r['Etapa del proceso'].toLowerCase().includes('entrevista final')).length;
-
+const activos = parseInt(rows.find(r => r['Estado']?.trim() === 'Activo')?.['Total'] || 0);
+const sinResp = parseInt(rows.find(r => r['Estado']?.trim() === 'Sin Comunicación')?.['Total'] || 0);
+const entrevista = 0;
     // El más urgente — mayor días sin contacto entre activos
     const activosRows = reinsercion.filter(r => r['Estado'] && r['Estado'].trim() === 'Activo');
     let maxDias = 0;
