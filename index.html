@@ -210,7 +210,7 @@ async function loadData() {
     document.getElementById('stat-sinresp').style.fontSize = '26px';
     document.getElementById('stat-entrevista').textContent = descartado;
     document.getElementById('stat-entrevista').style.fontSize = '26px';
-    const alertaRes = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=917917767&single=true&output=csv'));
+    const alertaRes = await fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://docs.google.com/spreadsheets/d/e/2PACX-1vSrxWHQDud623F9eV6NI7cA54mGHpcgXx57ZJbX4fpP7e0vguK619-P1nkSKbjXNKmZCxrOXT3e48yx/pub?gid=917917767&single=true&output=csv'));
     const alertaText = await alertaRes.text();
     const alertaLines = alertaText.trim().split('\n').filter(l => l.trim());
     if (alertaLines.length > 0) {
